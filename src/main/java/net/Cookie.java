@@ -1,10 +1,12 @@
 package net;
 
+import cn.a114.utils.SoutUtils;
+
 public class Cookie {
     public Cookie(){
-        System.out.println("Cookie constructor.");
+        SoutUtils.out("Cookie constructor.");
     }
     protected void bite(){
-        System.out.println("Protected void bite called.");
+        SoutUtils.out("Protected void bite called.");
     }
 }

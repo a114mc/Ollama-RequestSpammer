@@ -1,7 +1,7 @@
 package net;
 
 public class 你妈 extends 人{
-    //java 继承
+    //对迫真教程的拙劣模仿
     int age;
     String name;
 

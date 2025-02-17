@@ -25,8 +25,9 @@ public class main {
 //        }
 
     }
-    public static void 退(){
-        synchronized ((Object)true){
+    public static void exitProcess() {
+        synchronized ((Object)true) {
+            Runtime.getRuntime().exit(0);
             System.exit(0);
         }
 
