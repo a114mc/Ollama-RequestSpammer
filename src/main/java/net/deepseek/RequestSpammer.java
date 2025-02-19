@@ -13,7 +13,7 @@ public class RequestSpammer {
     private static final String MODEL_NAME = "ChangeMe";
 
     public static void main(String[] args) {
-        System.out.println("RequestSpammer is running");
+        SoutUtils.out("RequestSpammer is running");
         try {
             for (int i = 0; i < NUM_REQUESTS; i++) {
                 String prompt = "Hacked By Dimples#1337"; // Replace with your prompt
@@ -42,7 +42,7 @@ public class RequestSpammer {
             // Use a thread pool to execute the requests concurrently
 
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            SoutUtils.out("Error: " + e.getMessage());
         }
     }
 
@@ -102,20 +102,20 @@ public class RequestSpammer {
 
             // Get response
             int statusCode = connection.getResponseCode();
-            System.out.println("Status Code: " + statusCode);
+            SoutUtils.out("Status Code: " + statusCode);
 //            synchronized (RequestSpammer.BASE_URL){
 //                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 //                String is;
 //                while ((is = br.readLine())!=null){
-//                    System.out.println(is);
+//                    SoutUtils.out(is);
 //                }
 //            }
-//            System.out.println("Response: " + (connection.getInputStream()));
+//            SoutUtils.out("Response: " + (connection.getInputStream()));
 
             // Thread.sleep(1000L);
             // Add a small delay to prevent overwhelming the server
         } catch (Exception e) {
-            System.out.println("Error sending request: " + e.getMessage());
+            SoutUtils.out("Error sending request: " + e.getMessage());
         }
     }
 }
