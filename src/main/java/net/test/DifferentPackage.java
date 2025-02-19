@@ -7,7 +7,7 @@ public class DifferentPackage {
         // Cookie在net包内且extends Object
         // 在net包内的main可以访问cookie的bite
         Cookie _饼干 = new Cookie();
-
+        System.out.println(_饼干.toString());
         /*
         [ERROR] COMPILATION ERROR :
         [INFO] -------------------------------------------------------------

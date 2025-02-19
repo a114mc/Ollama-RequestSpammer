@@ -1,17 +1,21 @@
 package net;
 
-import net.test.DifferentPackage;
+import cn.a114.utils.SoutUtils;
+import net.deepseek.RequestSpammer;
 
+import java.io.IOException;
 import java.util.Random;
-
-import java.util.Scanner;
 
 public class main {
     public static Random RANDOM = new Random();
 
     public static void main(String[] args) {
 
-        DifferentPackage.call();
+        try {
+            SoutUtils.out(RequestSpammer.randomWords(3,true));
+        } catch (IOException e) {
+
+        }
 
 //        Scanner scanner = new Scanner(System.in);
 //
